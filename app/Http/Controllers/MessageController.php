@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Message;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    public function sendMessage(Request $request) {
+    public function sendMessage(Request $request, $id) {
         $attributes = $request->validate([
             'content' => 'string',
-            'sender_id' => 'integer',
-            'receiver_id' => 'integer',
+            'sender_id' => Auth::user()->id,
+            'receiver_id' => $id,
         ]);
         
         $message = Message::create([
@@ -22,9 +25,10 @@ class MessageController extends Controller
         return response()->json($message, 200);
     }
 
-    public function receiveMessage($id1, $id2) {
-        $userMessageHistory = Message::where('receiver_id', $id1)->where('sender_id', $id2)
-                                ->orWhere('receiver_id', $id2)->where('sender_id', $id1)->get();
+    public function receiveMessage($id) {
+        $authenticatedUserId = Auth::user()->id;
+        $userMessageHistory = Message::where('receiver_id', $authenticatedUserId)->where('sender_id', $id)
+                                ->orWhere('receiver_id', $id)->where('sender_id', $authenticatedUserId)->get();
 
         return response()->json($userMessageHistory, 200);
     }
