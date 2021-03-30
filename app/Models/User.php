@@ -19,9 +19,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'initial',
         'password',
+        'online',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -40,4 +41,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function message() {
+        $this->hasMany(Message::class);
+    }
 }
