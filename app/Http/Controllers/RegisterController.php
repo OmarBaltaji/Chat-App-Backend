@@ -13,6 +13,7 @@ class RegisterController extends Controller
             'name' => 'string|required',
             'email' => 'string|email|required',
             'password' => 'string|min:6|confirmed|required',
+            'initial' => 'string',
         ]);
 
         $default_photo_url = "assets/images/userImage/none.jpg";
@@ -23,6 +24,7 @@ class RegisterController extends Controller
             'email' => $attributes['email'],
             'password' => bcrypt($attributes['password']),
             'profile_photo' => $default_photo_url,
+            'initial' => $attributes['initial'],
         ]);
 
         return response()->json(['message' => 'Account created successfully'], 200);

@@ -24,7 +24,7 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/message/{id}', [MessageController::class, 'sendMessage']);
-    Route::get('/message/{id}', [MessageController::class, 'receiveMessage']);
+    Route::get('/message/{id}', [MessageController::class, 'conversationHistory']);
     Route::get('/matcheslist', [UserController::class , 'getMatchesList']);
     Route::get('/user', [UserController::class, 'getUserDetails']);
     Route::get('/logout', [AuthController::class, 'logout']);

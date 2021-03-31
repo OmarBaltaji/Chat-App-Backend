@@ -25,7 +25,7 @@ class MessageController extends Controller
         return response()->json($message, 200);
     }
 
-    public function receiveMessage($id) {
+    public function conversationHistory($id) {
         $authenticatedUserId = Auth::user()->id;
         $userMessageHistory = Message::where('receiver_id', $authenticatedUserId)->where('sender_id', $id)
                                 ->orWhere('receiver_id', $id)->where('sender_id', $authenticatedUserId)->get();

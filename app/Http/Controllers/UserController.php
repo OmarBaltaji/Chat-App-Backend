@@ -10,7 +10,7 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function getMatchesList() {
-        return User::all();
+        return User::all()->except(Auth::user()->id); // Return all users except the authenticated user
     }
     
     public function getUserDetails() {
