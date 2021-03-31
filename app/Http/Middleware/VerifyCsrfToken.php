@@ -12,11 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'api/*',
-        'http://localhost:6001/*',
-        'sub.domain.zone' => [
-          'prefix/*'
-        ],
-        'http://localhost:4200/*',
+        "api/*"
     ];
 }
