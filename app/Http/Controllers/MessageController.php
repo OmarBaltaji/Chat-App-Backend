@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\User;
@@ -12,16 +13,16 @@ class MessageController extends Controller
     public function sendMessage(Request $request, $id) {
         $attributes = $request->validate([
             'content' => 'string',
+        ]);
+
+        $message = Message::create([
+            'content' => $attributes['content'],
             'sender_id' => Auth::user()->id,
             'receiver_id' => $id,
         ]);
-        
-        $message = Message::create([
-            'content' => $attributes['content'],
-            'sender_id' => $attributes['sender_id'],
-            'receiver_id' => $attributes['receiver_id'],
-        ]);
 
+        broadcast(new MessageSent($attributes['content']));
+        
         return response()->json($message, 200);
     }
 
