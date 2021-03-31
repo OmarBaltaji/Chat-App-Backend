@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,10 @@ use App\Http\Controllers\UserController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/matcheslist', [UserController::class , 'getMatchesList']);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/message/{id}', [MessageController::class, 'sendMessage']);
     Route::get('/message/{id}', [MessageController::class, 'receiveMessage']);
+    Route::get('/matcheslist', [UserController::class , 'getMatchesList']);
+    Route::get('/user', [UserController::class, 'getUserDetails']);
 });
