@@ -26,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // null, ['middleware' => [ \Fruitcake\Cors\HandleCors::class ]]
         Passport::routes();
     }
 }
